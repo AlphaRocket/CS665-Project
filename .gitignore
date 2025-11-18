@@ -1,3 +1,4 @@
+# Other HW stuff
 /HW01
 /HW02
 /HW03
@@ -7,3 +8,22 @@
 /HW07
 /HW08
 /Project 1
+
+# Node
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Environment
+.env
+.env.local
+
+# OS Files
+.DS_Store
+
+# Python
+__pycache__/
+*.pyc
+instance/
+.env
+venv/
