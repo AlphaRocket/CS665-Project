@@ -34,6 +34,7 @@ def create_order(customer_id, order_drinks):
         drink_id = drink["drink_id"]
         selected_soda = drink.get("selected_soda")
         customer_notes = drink.get("customer_notes", "")
+        ingredients = drink.get("ingredients", [])
 
         cur.execute(
             """
@@ -43,9 +44,27 @@ def create_order(customer_id, order_drinks):
             """,
             (order_id, drink_id, size, selected_soda, customer_notes)
         )
+        order_drink_id = cur.fetchone()[0]
 
-        # TODO: Calculate real price based on drink selections
-        total_price += 1.00
+        for option_id in ingredients:
+            cur.execute(
+                """
+                INSERT INTO order_drink_selections (order_drink_id, option_id)
+                VALUES (%s, %s);
+                """,
+                (order_drink_id, option_id)
+            )
+
+            cur.execute(
+                """
+                UPDATE drink_options
+                SET inventory = inventory - 1
+                WHERE option_id = %s AND inventory > 0;
+                """,
+                (option_id,)
+            )
+
+        total_price += 1.00 + 0.50 * len(ingredients)
 
     cur.execute(
         """
