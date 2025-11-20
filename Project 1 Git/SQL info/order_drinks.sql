@@ -1,4 +1,4 @@
-INSERT INTO public.orderdrinks (orderdrinkid,orderid,drinkid,"Size","Selectedsoda",customernotes) VALUES
+INSERT INTO public.order_drinks (order_drink_id,order_id,drink_id,"size",selected_soda,customer_notes) VALUES
 	 ('1',1,1,'16oz',NULL,NULL),
 	 ('2',2,9,'16oz',NULL,NULL),
 	 ('3',3,9,'44oz',NULL,NULL),

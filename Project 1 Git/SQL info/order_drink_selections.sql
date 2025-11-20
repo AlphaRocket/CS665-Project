@@ -1,4 +1,4 @@
-INSERT INTO public.orderdrinkselections (orderdrinkid,optionid) VALUES
+INSERT INTO public.order_drink_selections (order_drink_id,option_id) VALUES
 	 ('4',8),
 	 ('4',9),
 	 ('4',20),

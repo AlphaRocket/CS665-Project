@@ -1,4 +1,4 @@
-INSERT INTO public.prebuiltdrinkselections (drinkid,optionid) VALUES
+INSERT INTO public.prebuilt_drink_selections (drink_id,option_id) VALUES
 	 (1,15),
 	 (1,18),
 	 (2,9),
@@ -9,7 +9,7 @@ INSERT INTO public.prebuiltdrinkselections (drinkid,optionid) VALUES
 	 (3,20),
 	 (4,9),
 	 (4,26);
-INSERT INTO public.prebuiltdrinkselections (drinkid,optionid) VALUES
+INSERT INTO public.prebuilt_drink_selections (drink_id,option_id) VALUES
 	 (4,19),
 	 (5,9),
 	 (5,18),
@@ -20,7 +20,7 @@ INSERT INTO public.prebuiltdrinkselections (drinkid,optionid) VALUES
 	 (7,27),
 	 (7,18),
 	 (8,3);
-INSERT INTO public.prebuiltdrinkselections (drinkid,optionid) VALUES
+INSERT INTO public.prebuilt_drink_selections (drink_id,option_id) VALUES
 	 (8,5),
 	 (8,20),
 	 (9,8),
