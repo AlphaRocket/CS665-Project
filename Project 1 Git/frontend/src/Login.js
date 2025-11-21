@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
 
 function Login({ onLogin }) {
   const [email, setEmail] = useState("");
@@ -8,33 +9,51 @@ function Login({ onLogin }) {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError("");
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  setError("");
 
-    try {
-      const res = await axios.post("http://localhost:5000/login", {
-        email,
-        password,
-      });
+  try {
+    const res = await axios.post("http://localhost:5000/login", { email, password });
 
-      const token = res.data.token;
-      localStorage.setItem("token", token);
+    const token = res.data.token;
+    localStorage.setItem("token", token);
 
-      onLogin();
+    const payload = jwtDecode(token);
+
+    onLogin();
+
+    if (payload.user_type === "employee") {
+      navigate("/inventory");
+    } else {
       navigate("/orders");
-    } catch (err) {
-      setError("Invalid email or password.");
     }
-  };
+
+  } catch (err) {
+    setError("Invalid email or password.");
+  }
+};
+
 
   return (
     <div style={{ maxWidth: 400, margin: "auto" }}>
       <h2>Login</h2>
       <form onSubmit={handleSubmit}>
-        <input type="email" placeholder="Email" value={email} onChange={(e)=>setEmail(e.target.value)} required />
+        <input
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
         <br />
-        <input type="password" placeholder="Password" value={password} onChange={(e)=>setPassword(e.target.value)} required />
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+        />
         <br />
         <button type="submit">Login</button>
       </form>

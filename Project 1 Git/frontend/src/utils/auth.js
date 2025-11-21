@@ -1,31 +1,48 @@
 // src/utils/auth.js
+import { jwtDecode } from "jwt-decode";
 
-export function isLoggedIn() {
-  return !!localStorage.getItem("token");
-}
+const TOKEN_KEY = "token";
 
-export function getToken() {
-  return localStorage.getItem("token");
-}
+// Store token
+export const setToken = (token) => {
+  localStorage.setItem(TOKEN_KEY, token);
+};
 
-export function setToken(token) {
-  localStorage.setItem("token", token);
-}
+// Retrieve token
+export const getToken = () => {
+  return localStorage.getItem(TOKEN_KEY);
+};
 
-export function removeToken() {
-  localStorage.removeItem("token");
-}
+// Remove token (logout)
+export const removeToken = () => {
+  localStorage.removeItem(TOKEN_KEY);
+};
 
-// NEW: get user type from token payload
-export function getUserType() {
+// Check if user is logged in
+export const isLoggedIn = () => {
+  const token = getToken();
+  if (!token) return false;
+
+  try {
+    const decoded = jwtDecode(token);
+    const exp = decoded.exp;
+    if (!exp) return false;
+    return Date.now() < exp * 1000;
+  } catch (err) {
+    return false;
+  }
+};
+
+// Get user type: "customer" or "employee"
+export const getUserType = () => {
   const token = getToken();
   if (!token) return null;
 
   try {
-    const payload = JSON.parse(atob(token.split(".")[1]));
-    return payload.user_type; // must match backend token field
+    const decoded = jwtDecode(token);
+    return decoded.user_type || null;
   } catch (err) {
-    console.error("Invalid token format", err);
     return null;
   }
-}
+};
+

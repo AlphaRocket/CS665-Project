@@ -5,7 +5,7 @@ import Login from "./Login";
 import Orders from "./Orders";
 import Inventory from "./Inventory";
 import ProtectedRoute from "./ProtectedRoute";
-import { isLoggedIn, getUserType } from "./utils/auth"; // create getUserType to decode token
+import { isLoggedIn, getUserType } from "./utils/auth";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(isLoggedIn());
@@ -13,14 +13,23 @@ function App() {
   const handleLogin = () => setLoggedIn(true);
   const handleLogout = () => setLoggedIn(false);
 
-  const userType = getUserType(); // "customer" or "employee"
-
   return (
     <BrowserRouter>
       <Routes>
         <Route
           path="/"
-          element={<Navigate to={isLoggedIn() ? "/orders" : "/login"} replace />}
+          element={
+            <Navigate
+              to={
+                isLoggedIn()
+                  ? getUserType() === "employee"
+                    ? "/inventory"
+                    : "/orders"
+                  : "/login"
+              }
+              replace
+            />
+          }
         />
         <Route path="/login" element={<Login onLogin={handleLogin} />} />
         <Route
@@ -31,16 +40,14 @@ function App() {
             </ProtectedRoute>
           }
         />
-        {userType === "employee" && (
-          <Route
-            path="/inventory"
-            element={
-              <ProtectedRoute>
-                <Inventory />
-              </ProtectedRoute>
-            }
-          />
-        )}
+        <Route
+          path="/inventory"
+          element={
+            <ProtectedRoute>
+              <Inventory onLogout={handleLogout} />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );
