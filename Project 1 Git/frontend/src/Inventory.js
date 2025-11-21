@@ -323,45 +323,97 @@ function Inventory({ onLogout }) {
           </tr>
         </thead>
         <tbody>
-          {inventory.map(item => (
-            <tr key={item.OptionID} style={{
-                    backgroundColor: item.Inventory > 50 ? '#c8e6c9'  // green
-                  : item.Inventory > 25  ? '#fff9c4'  // yellow
-                  : '#ffcdd2'                       // red
-            }}>
-
-              <td>{item.OptionID}</td>
-              <td>{editingItem?.OptionID === item.OptionID
-                ? <input value={editingItem.option_type} onChange={e => setEditingItem({ ...editingItem, option_type: e.target.value })} />
-                : item.OptionType}
-              </td>
-              <td>{editingItem?.OptionID === item.OptionID
-                ? <input value={editingItem.option_name} onChange={e => setEditingItem({ ...editingItem, option_name: e.target.value })} />
-                : item.OptionName}
-              </td>
-              <td>{editingItem?.OptionID === item.OptionID
-                ? <input type="number" value={editingItem.price} onChange={e => setEditingItem({ ...editingItem, price: parseFloat(e.target.value) })} />
-                : item.Price}
-              </td>
-              <td>{editingItem?.OptionID === item.OptionID
-                ? <input type="number" value={editingItem.inventory} onChange={e => setEditingItem({ ...editingItem, inventory: parseInt(e.target.value) })} />
-                : item.Inventory}
-              </td>
-              <td>
-                {editingItem?.OptionID === item.OptionID
-                  ? <>
-                      <button onClick={() => handleUpdate(item.OptionID)}>Save</button>
-                      <button onClick={() => setEditingItem(null)}>Cancel</button>
+            {inventory.map(item => (
+                <tr
+                key={item.OptionID}
+                style={{
+                    backgroundColor:
+                    item.Inventory > 50
+                        ? '#c8e6c9' // green
+                        : item.Inventory > 25
+                        ? '#fff9c4' // yellow
+                        : '#ffcdd2', // red
+                }}
+                >
+                <td>{item.OptionID}</td>
+                <td>
+                    {editingItem?.OptionID === item.OptionID ? (
+                    <input
+                        value={editingItem.option_type}
+                        onChange={e =>
+                        setEditingItem({ ...editingItem, option_type: e.target.value })
+                        }
+                    />
+                    ) : (
+                    item.OptionType
+                    )}
+                </td>
+                <td>
+                    {editingItem?.OptionID === item.OptionID ? (
+                    <input
+                        value={editingItem.option_name}
+                        onChange={e =>
+                        setEditingItem({ ...editingItem, option_name: e.target.value })
+                        }
+                    />
+                    ) : (
+                    item.OptionName
+                    )}
+                </td>
+                <td>
+                    {editingItem?.OptionID === item.OptionID ? (
+                    <input
+                        type="number"
+                        value={editingItem.price}
+                        onChange={e =>
+                        setEditingItem({ ...editingItem, price: parseFloat(e.target.value) })
+                        }
+                    />
+                    ) : (
+                    item.Price
+                    )}
+                </td>
+                <td>
+                    {editingItem?.OptionID === item.OptionID ? (
+                    <input
+                        type="number"
+                        value={editingItem.inventory}
+                        onChange={e =>
+                        setEditingItem({ ...editingItem, inventory: parseInt(e.target.value) })
+                        }
+                    />
+                    ) : (
+                    item.Inventory
+                    )}
+                </td>
+                <td>
+                    {editingItem?.OptionID === item.OptionID ? (
+                    <>
+                        <button onClick={() => handleUpdate(item.OptionID)}>Save</button>
+                        <button onClick={() => setEditingItem(null)}>Cancel</button>
                     </>
-                  : <>
-                      <button onClick={() => setEditingItem({ ...item, OptionID: item.OptionID })}>Edit</button>
-                      <button onClick={() => handleDelete(item.OptionID)}>Delete</button>
+                    ) : (
+                    <>
+                        <button
+                        onClick={() =>
+                            setEditingItem({
+                            OptionID: item.OptionID,
+                            option_type: item.OptionType,
+                            option_name: item.OptionName,
+                            price: item.Price,
+                            inventory: item.Inventory,
+                            })
+                        }
+                        >
+                        Edit
+                        </button>
+                        <button onClick={() => handleDelete(item.OptionID)}>Delete</button>
                     </>
-                }
-              </td>
-            </tr>
-          ))}
-        </tbody>
+                    )}
+                </td>
+                </tr>
+            ))}
+            </tbody>
       </table>
     </div>
   );
