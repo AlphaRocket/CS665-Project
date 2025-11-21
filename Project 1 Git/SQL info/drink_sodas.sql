@@ -1,4 +1,4 @@
-INSERT INTO public.drink_sodas (soda,soda_id) VALUES
+INSERT INTO public.drink_sodas (soda_name,soda_id) VALUES
 	 ('Dr. Pepper',1),
 	 ('Diet Dr. Pepper',2),
 	 ('Coca Cola',3),
